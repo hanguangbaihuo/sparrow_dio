@@ -1,6 +1,5 @@
-# sparrow_dio
-
-A new Flutter package project.
+# sparrow-dio
+对 dio 的封装，兼容回调函数方式
 
 ## Getting Started
 
@@ -12,3 +11,4 @@ multiple Flutter or Dart projects.
 For help getting started with Flutter, view our 
 [online documentation](https://flutter.dev/docs), which offers tutorials, 
 samples, guidance on mobile development, and a full API reference.
+
