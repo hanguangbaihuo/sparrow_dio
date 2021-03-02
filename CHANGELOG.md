@@ -1,3 +1,9 @@
-## [0.0.1] - TODO: Add release date.
+## [0.0.3] - 完善文档.
 
-* TODO: Describe initial release.
+* 完善文档信息
+## [0.0.2] - 完善文档.
+
+* 完善文档
+## [0.0.1] - 完成基础功能.
+
+* 完成基础功能，实现对dio的封装，提供async await和回调两种使用方式
