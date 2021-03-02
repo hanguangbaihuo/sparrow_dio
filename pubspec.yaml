@@ -1,8 +1,8 @@
 name: sparrow_dio
-description: A new Flutter package project.
+description: sparrow团队完成的对dio的封装，实现dio的async await调用以及回调方式的调用.
 version: 0.0.1
-author:
-homepage:
+author: junchao<junchaocode@gmail.com>
+homepage: https://github.com/hanguangbaihuo/sparrow-dio
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -14,6 +14,7 @@ dependencies:
 
   connectivity: ^2.0.2 # 检查手机联网情况
   dio: ^3.0.9 # 网络请求
+  bot_toast: ^3.0.0 # toast组件
 
 dev_dependencies:
   flutter_test:

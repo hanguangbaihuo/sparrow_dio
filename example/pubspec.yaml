@@ -3,7 +3,6 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -24,8 +23,9 @@ dependencies:
   flutter:
     sdk: flutter
   
-  connectivity: ^2.0.2 # 检查手机联网情况
-  dio: ^3.0.9 # 网络请求
+  # connectivity: ^2.0.2 # 检查手机联网情况
+  sparrow_dio:
+    path: ../
 
 
   # The following adds the Cupertino Icons font to your application.
