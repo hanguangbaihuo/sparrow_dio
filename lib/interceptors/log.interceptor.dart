@@ -57,18 +57,26 @@ Response _handlerResponseError(
     showToast('网络异常, 请稍后再试');
     return null;
   }
-
-  if (response.statusCode == 401) {
-    showToast('没有权限');
-    return null;
-  }
-
   // 通过request.options中extra中额外配置参数判断错误处理方式
   if (request.extra["isCustomError"] == true) {
     return response;
   }
 
+  if (response.statusCode == 401) {
+    showToast('401 没有权限');
+    return null;
+  }
+
+  if (response.statusCode == 404) {
+    showToast('404 Page No Found');
+    return null;
+  }
+
   var errorData = response.data;
+  if (errorData is String) {
+    showToastForException("$errorData");
+    return null;
+  }
 
   var message = errorData['message'] ??
       errorData['err_msg'] ??

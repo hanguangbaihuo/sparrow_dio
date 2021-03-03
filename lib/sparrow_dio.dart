@@ -15,10 +15,10 @@ final BaseOptions _baseOptions = BaseOptions(
 final Dio _dio = Dio(_baseOptions)
   // 检查网络
   ..interceptors.add(connectivityInterceptor)
-  // 打印日志
-  ..interceptors.add(logInterceptor)
   // 处理token
-  ..interceptors.add(tokenInterceptor);
+  ..interceptors.add(tokenInterceptor)
+  // 打印日志
+  ..interceptors.add(logInterceptor);
 
 // dart文件中只能定义变量，类，函数，不能执行函数，所以使用..进行级联调用
 // dart只能在main中执行函数，系统对main函数进行调用
