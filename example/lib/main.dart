@@ -47,10 +47,14 @@ class _MyHomePageState extends State<MyHomePage> {
     /// callback 请求示例
     Request.getCallback(
       url: "http://www.baidu.com",
+      data: {},
+      queryParameters: {},
+      complete: () {},
       success: (res) {
         _result = res.data;
         setState(() {});
       },
+      error: (err) {},
     );
   }
 
