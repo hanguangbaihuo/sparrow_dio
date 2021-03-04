@@ -266,9 +266,9 @@ class Request {
         if (!(success == null)) {
           success(response);
         }
-      }).catchError((Object onError) {
+      }).catchError((Object err) {
         if (!(error == null)) {
-          error(onError);
+          error(err);
         }
       }).whenComplete(() {
         if (!(complete == null)) {
