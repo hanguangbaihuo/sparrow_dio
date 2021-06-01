@@ -1,4 +1,4 @@
-# sparrow-dio
+# sparrow_dio
 
 对 dio 的封装，兼容回调函数方式
 
@@ -29,8 +29,8 @@ print(res);
 
 # 项目信息
 
-主页：[https://github.com/hanguangbaihuo/sparrow-dio](https://github.com/hanguangbaihuo/sparrow-dio)
+主页：[https://github.com/hanguangbaihuo/sparrow_dio](https://github.com/hanguangbaihuo/sparrow_dio)
 
-issue: https://github.com/hanguangbaihuo/sparrow-dio/issues
+issue: https://github.com/hanguangbaihuo/sparrow_dio/issues
 
 使用有碰到各种问题，欢迎大家在issue页面留言
