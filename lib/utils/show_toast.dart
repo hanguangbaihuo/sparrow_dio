@@ -52,7 +52,7 @@ CancelFunc showToastForException(String msg) {
 }
 
 /// 显示widget toast
-CancelFunc showWidget({@required Widget child}) {
+CancelFunc showWidget({required Widget child}) {
   return BotToast.showAnimationWidget(
     animationDuration: Duration(milliseconds: 0),
     backgroundColor: Colors.black.withAlpha(100),

@@ -1,15 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:sparrow_dio/sparrow_dio.dart';
-
 import 'package:dio/dio.dart';
 
 class CustomInterceptors extends InterceptorsWrapper {
   @override
-  Future onRequest(RequestOptions options) {
+  void onRequest(RequestOptions options, handler) {
     // 在请求被发送之前做一些事情
-    print("REQUEST[${options?.method}] => PATH: ${options?.path}");
-    return super.onRequest(options);
+    print("REQUEST[${options.method}] => PATH: ${options.path}");
+    super.onRequest(options, handler);
     // 如果你想完成请求并返回一些自定义数据，可以返回一个`Response`对象或返回`dio.resolve(data)`。
     // 这样请求将会被终止，上层then会被调用，then中返回的数据将是你的自定义数据data.
     //
@@ -18,18 +16,19 @@ class CustomInterceptors extends InterceptorsWrapper {
   }
 
   @override
-  Future onResponse(Response response) {
+  void onResponse(Response response, handler) {
     // 在返回响应数据之前做一些预处理
     print(
-        "RESPONSE[${response?.statusCode}] => PATH: ${response?.request?.path}");
-    return super.onResponse(response); // continue
+        "RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}");
+    super.onResponse(response, handler); // continue
   }
 
   @override
-  Future onError(DioError err) {
+  void onError(DioError err, handler) {
     // 当请求失败时做一些预处理
-    print("ERROR[${err?.response?.statusCode}] => PATH: ${err?.request?.path}");
-    return super.onError(err); // continue
+    print(
+        "ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}");
+    super.onError(err, handler); // continue
   }
 }
 

@@ -1,21 +1,21 @@
-/*
- * @LastEditors: hbshun
- * @FilePath: /app_lanyue/lib/request/interceptors/connectivity.interceptor.dart
- */
-import 'package:dio/dio.dart' hide VoidVallback;
+import 'package:dio/dio.dart';
 import 'package:connectivity/connectivity.dart';
 
 InterceptorsWrapper connectivityInterceptor = InterceptorsWrapper(
-  onRequest: (RequestOptions options) async {
+  onRequest: (RequestOptions options, RequestInterceptorHandler handler) async {
     var connectivity = await Connectivity().checkConnectivity();
     if (connectivity == ConnectivityResult.none) {
-      throw DioError(
-        type: DioErrorType.RESPONSE,
+      handler.reject(DioError(
+        requestOptions: options,
+        type: DioErrorType.response,
         response: Response(
+          requestOptions: options,
           statusCode: 600,
           statusMessage: "网络异常",
         ),
-      );
+      ));
+    } else {
+      handler.next(options);
     }
   },
 );

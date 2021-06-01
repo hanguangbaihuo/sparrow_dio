@@ -5,16 +5,16 @@ author: junchao<junchaocode@gmail.com>
 homepage: https://github.com/hanguangbaihuo/sparrow_dio
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  connectivity: ^2.0.2 # 检查手机联网情况
-  dio: ^3.0.9 # 网络请求
-  bot_toast: ^3.0.0 # toast组件
+  connectivity: ^3.0.6 # 检查手机联网情况
+  dio: ^4.0.0 # 网络请求
+  bot_toast: ^4.0.1 # toast组件
 
 dev_dependencies:
   flutter_test:

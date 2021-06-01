@@ -26,11 +26,11 @@ final Dio _dio = Dio(_baseOptions)
 class Request {
   /// 封装dio的请求
   static Future<Response<T>> _request<T>({
-    @required String method,
-    @required String url,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+    required String method,
+    required String url,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     bool isCustomError = false,
     String token = '',
@@ -40,7 +40,7 @@ class Request {
       url,
       data: data,
       queryParameters: queryParameters,
-      options: options.merge(
+      options: options.copyWith(
         method: method,
         extra: {
           "needToken": needToken,
@@ -53,10 +53,10 @@ class Request {
 
   /// _request封装对外暴露出来的别名，方便使用
   static Future<Response<T>> get<T>({
-    @required String url,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+    required String url,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token: '',
     bool isCustomError = false,
@@ -75,10 +75,10 @@ class Request {
 
   /// _request封装对外暴露出来的别名，方便使用
   static Future<Response<T>> post<T>({
-    @required String url,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+    required String url,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token: '',
     bool isCustomError = false,
@@ -97,10 +97,10 @@ class Request {
 
   /// _request封装对外暴露出来的别名，方便使用
   static Future<Response<T>> put<T>({
-    @required String url,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+    required String url,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token: '',
     bool isCustomError = false,
@@ -119,10 +119,10 @@ class Request {
 
   /// _request封装对外暴露出来的别名，方便使用
   static Future<Response<T>> patch<T>({
-    @required String url,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+    required String url,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token: '',
     bool isCustomError = false,
@@ -141,10 +141,10 @@ class Request {
 
   /// _request封装对外暴露出来的别名，方便使用
   static Future<Response<T>> delete<T>({
-    @required String url,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+    required String url,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token: '',
     bool isCustomError = false,
@@ -163,10 +163,10 @@ class Request {
 
   /// _request封装对外暴露出来的别名，方便使用
   static Future<Response<T>> path<T>({
-    @required String url,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+    required String url,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token: '',
     bool isCustomError = false,
@@ -185,10 +185,10 @@ class Request {
 
   /// _request封装对外暴露出来的别名，方便使用
   static Future<Response<T>> head<T>({
-    @required String url,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+    required String url,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token: '',
     bool isCustomError = false,
@@ -207,10 +207,10 @@ class Request {
 
   /// _request封装对外暴露出来的别名，方便使用
   static Future<Response<T>> download<T>({
-    @required String url,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+    required String url,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token: '',
     bool isCustomError = false,
@@ -230,17 +230,17 @@ class Request {
   ///------------------------------------------------------------------------------
 
   /// 在dio请求封装基础上，增加对 callback 请求调用方式的支持
-  static Future<Response<T>> _requestCallback<T>({
-    @required String method,
-    @required String url,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+  static Future<Response<T>>? _requestCallback<T>({
+    required String method,
+    required String url,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token = '',
-    @required void Function(Response) success,
-    void Function(DioError) error,
-    Function complete,
+    required void Function(Response) success,
+    void Function(DioError)? error,
+    Function? complete,
   }) {
     options = options ?? Options();
     if (success == null && error == null && complete == null) {
@@ -268,7 +268,7 @@ class Request {
         }
       }).catchError((Object err) {
         if (!(error == null)) {
-          error(err);
+          error(err as DioError);
         }
       }).whenComplete(() {
         if (!(complete == null)) {
@@ -280,16 +280,16 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> getCallback<T>({
-    @required String url,
-    @required void Function(Response) success,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+  static Future<Response<T>>? getCallback<T>({
+    required String url,
+    required void Function(Response) success,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token = '',
-    void Function(DioError) error,
-    Function complete,
+    void Function(DioError)? error,
+    Function? complete,
   }) {
     return _requestCallback(
       method: "GET",
@@ -306,16 +306,16 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> postCallback<T>({
-    @required String url,
-    @required void Function(Response) success,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+  static Future<Response<T>>? postCallback<T>({
+    required String url,
+    required void Function(Response) success,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token = '',
-    void Function(DioError) error,
-    Function complete,
+    void Function(DioError)? error,
+    Function? complete,
   }) {
     return _requestCallback(
       method: "POST",
@@ -332,16 +332,16 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> putCallback<T>({
-    @required String url,
-    @required void Function(Response) success,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+  static Future<Response<T>>? putCallback<T>({
+    required String url,
+    required void Function(Response) success,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token = '',
-    void Function(DioError) error,
-    Function complete,
+    void Function(DioError)? error,
+    Function? complete,
   }) {
     return _requestCallback(
       method: "PUT",
@@ -358,16 +358,16 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> patchCallback<T>({
-    @required String url,
-    @required void Function(Response) success,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+  static Future<Response<T>>? patchCallback<T>({
+    required String url,
+    required void Function(Response) success,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token = '',
-    void Function(DioError) error,
-    Function complete,
+    void Function(DioError)? error,
+    Function? complete,
   }) {
     return _requestCallback(
       method: "PATCH",
@@ -384,16 +384,16 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> deleteCallback<T>({
-    @required String url,
-    @required void Function(Response) success,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+  static Future<Response<T>>? deleteCallback<T>({
+    required String url,
+    required void Function(Response) success,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token = '',
-    void Function(DioError) error,
-    Function complete,
+    void Function(DioError)? error,
+    Function? complete,
   }) {
     return _requestCallback(
       method: "DELETE",
@@ -410,16 +410,16 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> pathCallback<T>({
-    @required String url,
-    @required void Function(Response) success,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+  static Future<Response<T>>? pathCallback<T>({
+    required String url,
+    required void Function(Response) success,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token = '',
-    void Function(DioError) error,
-    Function complete,
+    void Function(DioError)? error,
+    Function? complete,
   }) {
     return _requestCallback(
       method: "PATH",
@@ -436,16 +436,16 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> headCallback<T>({
-    @required String url,
-    @required void Function(Response) success,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+  static Future<Response<T>>? headCallback<T>({
+    required String url,
+    required void Function(Response) success,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token = '',
-    void Function(DioError) error,
-    Function complete,
+    void Function(DioError)? error,
+    Function? complete,
   }) {
     return _requestCallback(
       method: "HEAD",
@@ -462,16 +462,16 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> downloadCallback<T>({
-    @required String url,
-    @required void Function(Response) success,
-    Map<String, dynamic> queryParameters,
-    Map data,
-    Options options,
+  static Future<Response<T>>? downloadCallback<T>({
+    required String url,
+    required void Function(Response) success,
+    Map<String, dynamic>? queryParameters,
+    Map? data,
+    Options? options,
     bool needToken = false,
     String token = '',
-    void Function(DioError) error,
-    Function complete,
+    void Function(DioError)? error,
+    Function? complete,
   }) {
     return _requestCallback(
       method: "DOWNLOAD",
