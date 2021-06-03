@@ -1,10 +1,21 @@
 library sparrow_dio;
 
 import 'package:dio/dio.dart' hide VoidCallback;
-import 'package:flutter/material.dart';
 import 'interceptors/connectivity.interceptor.dart';
 import 'interceptors/log.interceptor.dart';
 import 'interceptors/token.interceptor.dart';
+import 'package:sparrow_utils/sparrow_utils.dart';
+
+enum HttpMethods {
+  GET,
+  POST,
+  PUT,
+  PATCH,
+  DELETE,
+  HEAD,
+  PATH,
+  DOWNLOAD,
+}
 
 // 设置超时时间
 final BaseOptions _baseOptions = BaseOptions(
@@ -24,16 +35,21 @@ final Dio _dio = Dio(_baseOptions)
 // dart只能在main中执行函数，系统对main函数进行调用
 
 class Request {
+  static String? _token;
+  static setToken(String token) {
+    _token = token;
+  }
+
   /// 封装dio的请求
-  static Future<Response<T>> _request<T>({
-    required String method,
-    required String url,
+  static Future<Response<T>> _request<T>(
+    String url, {
+    HttpMethods method = HttpMethods.GET,
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
     bool needToken = false,
     bool isCustomError = false,
-    String token = '',
+    String? token,
   }) {
     options = options ?? Options();
     return _dio.request(
@@ -41,19 +57,19 @@ class Request {
       data: data,
       queryParameters: queryParameters,
       options: options.copyWith(
-        method: method,
+        method: SPEnumUtils.convertToString(method),
         extra: {
           "needToken": needToken,
           "isCustomError": isCustomError,
-          "token": token,
+          "token": token ?? _token,
         },
       ),
     );
   }
 
   /// _request封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> get<T>({
-    required String url,
+  static Future<Response<T>> get<T>(
+    String url, {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
@@ -62,8 +78,8 @@ class Request {
     bool isCustomError = false,
   }) {
     return _request(
-      method: "GET",
-      url: url,
+      url,
+      method: HttpMethods.GET,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -74,8 +90,8 @@ class Request {
   }
 
   /// _request封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> post<T>({
-    required String url,
+  static Future<Response<T>> post<T>(
+    String url, {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
@@ -84,8 +100,8 @@ class Request {
     bool isCustomError = false,
   }) {
     return _request(
-      method: "POST",
-      url: url,
+      url,
+      method: HttpMethods.POST,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -96,8 +112,8 @@ class Request {
   }
 
   /// _request封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> put<T>({
-    required String url,
+  static Future<Response<T>> put<T>(
+    String url, {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
@@ -106,8 +122,8 @@ class Request {
     bool isCustomError = false,
   }) {
     return _request(
-      method: "PUT",
-      url: url,
+      url,
+      method: HttpMethods.PUT,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -118,8 +134,8 @@ class Request {
   }
 
   /// _request封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> patch<T>({
-    required String url,
+  static Future<Response<T>> patch<T>(
+    String url, {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
@@ -128,8 +144,8 @@ class Request {
     bool isCustomError = false,
   }) {
     return _request(
-      method: "PATCH",
-      url: url,
+      url,
+      method: HttpMethods.PATCH,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -140,8 +156,8 @@ class Request {
   }
 
   /// _request封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> delete<T>({
-    required String url,
+  static Future<Response<T>> delete<T>(
+    String url, {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
@@ -150,8 +166,8 @@ class Request {
     bool isCustomError = false,
   }) {
     return _request(
-      method: "DELETE",
-      url: url,
+      url,
+      method: HttpMethods.DELETE,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -162,8 +178,8 @@ class Request {
   }
 
   /// _request封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> path<T>({
-    required String url,
+  static Future<Response<T>> path<T>(
+    String url, {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
@@ -172,8 +188,8 @@ class Request {
     bool isCustomError = false,
   }) {
     return _request(
-      method: "PATH",
-      url: url,
+      url,
+      method: HttpMethods.PATH,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -184,8 +200,8 @@ class Request {
   }
 
   /// _request封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> head<T>({
-    required String url,
+  static Future<Response<T>> head<T>(
+    String url, {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
@@ -194,8 +210,8 @@ class Request {
     bool isCustomError = false,
   }) {
     return _request(
-      method: "HEAD",
-      url: url,
+      url,
+      method: HttpMethods.HEAD,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -206,8 +222,8 @@ class Request {
   }
 
   /// _request封装对外暴露出来的别名，方便使用
-  static Future<Response<T>> download<T>({
-    required String url,
+  static Future<Response<T>> download<T>(
+    String url, {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
@@ -216,8 +232,8 @@ class Request {
     bool isCustomError = false,
   }) {
     return _request(
-      method: "DOWNLOAD",
-      url: url,
+      url,
+      method: HttpMethods.DOWNLOAD,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -230,9 +246,9 @@ class Request {
   ///------------------------------------------------------------------------------
 
   /// 在dio请求封装基础上，增加对 callback 请求调用方式的支持
-  static Future<Response<T>>? _requestCallback<T>({
-    required String method,
-    required String url,
+  static Future<Response<T>>? _requestCallback<T>(
+    String url, {
+    HttpMethods method = HttpMethods.GET,
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
@@ -245,8 +261,8 @@ class Request {
     options = options ?? Options();
     if (success == null && error == null && complete == null) {
       Request._request(
+        url,
         method: method,
-        url: url,
         queryParameters: queryParameters,
         data: data,
         options: options,
@@ -255,8 +271,8 @@ class Request {
       );
     } else {
       Request._request(
+        url,
         method: method,
-        url: url,
         queryParameters: queryParameters,
         data: data,
         options: options,
@@ -280,8 +296,8 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>>? getCallback<T>({
-    required String url,
+  static Future<Response<T>>? getCallback<T>(
+    String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
     Map? data,
@@ -292,8 +308,8 @@ class Request {
     Function? complete,
   }) {
     return _requestCallback(
-      method: "GET",
-      url: url,
+      url,
+      method: HttpMethods.GET,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -306,8 +322,8 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>>? postCallback<T>({
-    required String url,
+  static Future<Response<T>>? postCallback<T>(
+    String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
     Map? data,
@@ -318,8 +334,8 @@ class Request {
     Function? complete,
   }) {
     return _requestCallback(
-      method: "POST",
-      url: url,
+      url,
+      method: HttpMethods.POST,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -332,8 +348,8 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>>? putCallback<T>({
-    required String url,
+  static Future<Response<T>>? putCallback<T>(
+    String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
     Map? data,
@@ -344,8 +360,8 @@ class Request {
     Function? complete,
   }) {
     return _requestCallback(
-      method: "PUT",
-      url: url,
+      url,
+      method: HttpMethods.PUT,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -358,8 +374,8 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>>? patchCallback<T>({
-    required String url,
+  static Future<Response<T>>? patchCallback<T>(
+    String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
     Map? data,
@@ -370,8 +386,8 @@ class Request {
     Function? complete,
   }) {
     return _requestCallback(
-      method: "PATCH",
-      url: url,
+      url,
+      method: HttpMethods.PATCH,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -384,8 +400,8 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>>? deleteCallback<T>({
-    required String url,
+  static Future<Response<T>>? deleteCallback<T>(
+    String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
     Map? data,
@@ -396,8 +412,8 @@ class Request {
     Function? complete,
   }) {
     return _requestCallback(
-      method: "DELETE",
-      url: url,
+      url,
+      method: HttpMethods.DELETE,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -410,8 +426,8 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>>? pathCallback<T>({
-    required String url,
+  static Future<Response<T>>? pathCallback<T>(
+    String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
     Map? data,
@@ -422,8 +438,8 @@ class Request {
     Function? complete,
   }) {
     return _requestCallback(
-      method: "PATH",
-      url: url,
+      url,
+      method: HttpMethods.PATH,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -436,8 +452,8 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>>? headCallback<T>({
-    required String url,
+  static Future<Response<T>>? headCallback<T>(
+    String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
     Map? data,
@@ -448,8 +464,8 @@ class Request {
     Function? complete,
   }) {
     return _requestCallback(
-      method: "HEAD",
-      url: url,
+      url,
+      method: HttpMethods.HEAD,
       queryParameters: queryParameters,
       data: data,
       options: options,
@@ -462,8 +478,8 @@ class Request {
   }
 
   /// requestCallback封装对外暴露出来的别名，方便使用
-  static Future<Response<T>>? downloadCallback<T>({
-    required String url,
+  static Future<Response<T>>? downloadCallback<T>(
+    String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
     Map? data,
@@ -474,8 +490,8 @@ class Request {
     Function? complete,
   }) {
     return _requestCallback(
-      method: "DOWNLOAD",
-      url: url,
+      url,
+      method: HttpMethods.DOWNLOAD,
       queryParameters: queryParameters,
       data: data,
       options: options,
