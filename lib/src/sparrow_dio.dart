@@ -38,7 +38,6 @@ class Request {
     Options? options,
     bool needToken = false,
     bool isCustomError = false,
-    String? token,
   }) {
     options = options ?? Options();
     return _dio.request(
@@ -50,7 +49,6 @@ class Request {
         extra: {
           "needToken": needToken,
           "isCustomError": isCustomError,
-          "token": token,
         },
       ),
     );
@@ -63,7 +61,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token: '',
     bool isCustomError = false,
   }) {
     return _request(
@@ -73,7 +70,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       isCustomError: isCustomError,
     );
   }
@@ -85,7 +81,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token: '',
     bool isCustomError = false,
   }) {
     return _request(
@@ -95,7 +90,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       isCustomError: isCustomError,
     );
   }
@@ -107,7 +101,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token: '',
     bool isCustomError = false,
   }) {
     return _request(
@@ -117,7 +110,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       isCustomError: isCustomError,
     );
   }
@@ -129,7 +121,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token: '',
     bool isCustomError = false,
   }) {
     return _request(
@@ -139,7 +130,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       isCustomError: isCustomError,
     );
   }
@@ -151,7 +141,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token: '',
     bool isCustomError = false,
   }) {
     return _request(
@@ -161,7 +150,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       isCustomError: isCustomError,
     );
   }
@@ -173,7 +161,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token: '',
     bool isCustomError = false,
   }) {
     return _request(
@@ -183,7 +170,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       isCustomError: isCustomError,
     );
   }
@@ -195,7 +181,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token: '',
     bool isCustomError = false,
   }) {
     return _request(
@@ -205,7 +190,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       isCustomError: isCustomError,
     );
   }
@@ -217,7 +201,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token: '',
     bool isCustomError = false,
   }) {
     return _request(
@@ -227,7 +210,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       isCustomError: isCustomError,
     );
   }
@@ -242,7 +224,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token = '',
     required void Function(Response) success,
     void Function(DioError)? error,
     Function? complete,
@@ -256,7 +237,6 @@ class Request {
         data: data,
         options: options,
         needToken: needToken,
-        token: token,
       );
     } else {
       Request._request(
@@ -266,7 +246,6 @@ class Request {
         data: data,
         options: options,
         needToken: needToken,
-        token: token,
       ).then((Response response) {
         if (!(success == null)) {
           success(response);
@@ -292,7 +271,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token = '',
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -303,7 +281,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       success: success,
       error: error,
       complete: complete,
@@ -318,7 +295,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token = '',
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -329,7 +305,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       success: success,
       error: error,
       complete: complete,
@@ -344,7 +319,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token = '',
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -355,7 +329,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       success: success,
       error: error,
       complete: complete,
@@ -370,7 +343,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token = '',
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -381,7 +353,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       success: success,
       error: error,
       complete: complete,
@@ -396,7 +367,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token = '',
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -407,7 +377,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       success: success,
       error: error,
       complete: complete,
@@ -422,7 +391,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token = '',
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -433,7 +401,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       success: success,
       error: error,
       complete: complete,
@@ -448,7 +415,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token = '',
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -459,7 +425,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       success: success,
       error: error,
       complete: complete,
@@ -474,7 +439,6 @@ class Request {
     Map? data,
     Options? options,
     bool needToken = false,
-    String token = '',
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -485,7 +449,6 @@ class Request {
       data: data,
       options: options,
       needToken: needToken,
-      token: token,
       success: success,
       error: error,
       complete: complete,
