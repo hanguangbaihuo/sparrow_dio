@@ -89,7 +89,6 @@ Response? _handlerResponseError(
 InterceptorsWrapper logInterceptor = InterceptorsWrapper(
   // 在请求被发送之前做一些事情
   onRequest: (RequestOptions options, handler) async {
-    print(12313213);
     handler.next(options);
     // 如果你想完成请求并返回一些自定义数据，可以返回一个`Response`对象或返回`dio.resolve(data)`。
     // 这样请求将会被终止，上层then会被调用，then中返回的数据将是你的自定义数据data.
@@ -118,8 +117,14 @@ InterceptorsWrapper logInterceptor = InterceptorsWrapper(
 
       /// When the server response, but with a incorrect status, such as 404, 503...
       case DioErrorType.response:
-        _handlerResponseError(error, request, response);
-        return;
+        var res = _handlerResponseError(error, request, response);
+
+        if (res == null) {
+          handler.resolve(response!);
+        } else {
+          handler.reject(error);
+        }
+        break;
 
       /// It occurs when url is opened timeout.
       case DioErrorType.connectTimeout:
@@ -140,7 +145,7 @@ InterceptorsWrapper logInterceptor = InterceptorsWrapper(
       default:
         // 非业务错误
         _handleTimeOutError(error.type, error.requestOptions);
-        handler.next(error);
+        handler.reject(error);
 
       // 业务错误 go on
     }
