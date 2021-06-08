@@ -36,7 +36,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     bool isCustomError = false,
   }) {
     options = options ?? Options();
@@ -60,7 +60,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     bool isCustomError = false,
   }) {
     return _request(
@@ -80,7 +80,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     bool isCustomError = false,
   }) {
     return _request(
@@ -100,7 +100,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     bool isCustomError = false,
   }) {
     return _request(
@@ -120,7 +120,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     bool isCustomError = false,
   }) {
     return _request(
@@ -140,7 +140,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     bool isCustomError = false,
   }) {
     return _request(
@@ -160,7 +160,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     bool isCustomError = false,
   }) {
     return _request(
@@ -180,7 +180,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     bool isCustomError = false,
   }) {
     return _request(
@@ -200,7 +200,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     bool isCustomError = false,
   }) {
     return _request(
@@ -223,7 +223,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     required void Function(Response) success,
     void Function(DioError)? error,
     Function? complete,
@@ -270,7 +270,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -294,7 +294,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -318,7 +318,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -342,7 +342,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -366,7 +366,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -390,7 +390,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -414,7 +414,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     void Function(DioError)? error,
     Function? complete,
   }) {
@@ -438,7 +438,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     Map? data,
     Options? options,
-    bool needToken = false,
+    bool needToken = true,
     void Function(DioError)? error,
     Function? complete,
   }) {
