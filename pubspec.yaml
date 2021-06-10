@@ -1,6 +1,6 @@
 name: sparrow_dio
 description: sparrow团队完成的对dio的封装，实现dio的async await调用以及回调方式的调用.
-version: 0.7.0
+version: 0.8.0
 
 homepage: https://github.com/hanguangbaihuo/sparrow_dio
 

@@ -26,11 +26,11 @@ final Dio _dio = Dio(_baseOptions)
   ..interceptors.add(PrettyDioLogger(
     requestHeader: true,
     requestBody: true,
-    responseBody: true,
+    responseBody: false,
     responseHeader: true,
     error: true,
     compact: true,
-    maxWidth: 90,
+    maxWidth: 100,
   ));
 
 // dart文件中只能定义变量，类，函数，不能执行函数，所以使用..进行级联调用

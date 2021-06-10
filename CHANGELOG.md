@@ -1,3 +1,4 @@
+## [0.8.0] - pretty-log: 不打印body
 ## [0.7.0] - pretty-log, body类型为dynamic
 
 ## [0.6.0] - 异常处理handler.reject, handler.resolve
