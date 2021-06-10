@@ -86,27 +86,7 @@ Response? _handlerResponseError(
 }
 
 // 打印日志
-InterceptorsWrapper logInterceptor = InterceptorsWrapper(
-  // 在请求被发送之前做一些事情
-  onRequest: (RequestOptions options, handler) async {
-    handler.next(options);
-    // 如果你想完成请求并返回一些自定义数据，可以返回一个`Response`对象或返回`dio.resolve(data)`。
-    // 这样请求将会被终止，上层then会被调用，then中返回的数据将是你的自定义数据data.
-    //
-    // 如果你想终止请求并触发一个错误,你可以返回一个`DioError`对象，或返回`dio.reject(errMsg)`，
-    // 这样请求将被中止并触发异常，上层catchError会被调用。
-  },
-
-  // 在返回响应数据之前做一些预处理
-  onResponse: (Response response, handler) async {
-    final request = response.requestOptions;
-    print('===请求返回===${request.method} ${request.baseUrl + request.path}');
-    print('RequestQuery:${request.queryParameters}');
-    print('RequestBody:${request.data}');
-    print('Status: ${response.statusCode}');
-    handler.next(response); // continue
-  },
-
+InterceptorsWrapper errorInterceptor = InterceptorsWrapper(
   // 错误预处理
   onError: (DioError error, handler) async {
     final request = error.requestOptions;

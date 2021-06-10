@@ -1,6 +1,9 @@
-## [0.5.0] - needToken默认值为true
+## [0.7.0] - pretty-log, body类型为dynamic
 
 ## [0.6.0] - 异常处理handler.reject, handler.resolve
+
+## [0.5.0] - needToken默认值为true
+
 
 ## [0.4.0] - 去掉每个方法设置token
 

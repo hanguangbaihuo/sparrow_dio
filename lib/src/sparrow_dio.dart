@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart' hide VoidCallback;
 import 'interceptors/connectivity.interceptor.dart';
-import 'interceptors/log.interceptor.dart';
+import 'interceptors/error.interceptor.dart';
 import 'interceptors/token.interceptor.dart';
 import 'package:sparrow_utils/sparrow_utils.dart';
 import 'sparrow_dio_config.dart';
+
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'http_methods.dart';
 
@@ -18,8 +20,18 @@ final Dio _dio = Dio(_baseOptions)
   ..interceptors.add(connectivityInterceptor)
   // 处理token
   ..interceptors.add(tokenInterceptor)
+  // 错误处理
+  ..interceptors.add(errorInterceptor)
   // 打印日志
-  ..interceptors.add(logInterceptor);
+  ..interceptors.add(PrettyDioLogger(
+    requestHeader: true,
+    requestBody: true,
+    responseBody: true,
+    responseHeader: true,
+    error: true,
+    compact: true,
+    maxWidth: 90,
+  ));
 
 // dart文件中只能定义变量，类，函数，不能执行函数，所以使用..进行级联调用
 // dart只能在main中执行函数，系统对main函数进行调用
@@ -34,7 +46,7 @@ class Request {
     String url, {
     HttpMethods method = HttpMethods.GET,
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     bool isCustomError = false,
@@ -58,7 +70,6 @@ class Request {
   static Future<Response<T>> get<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
-    Map? data,
     Options? options,
     bool needToken = true,
     bool isCustomError = false,
@@ -67,7 +78,6 @@ class Request {
       url,
       method: HttpMethods.GET,
       queryParameters: queryParameters,
-      data: data,
       options: options,
       needToken: needToken,
       isCustomError: isCustomError,
@@ -78,7 +88,7 @@ class Request {
   static Future<Response<T>> post<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     bool isCustomError = false,
@@ -98,7 +108,7 @@ class Request {
   static Future<Response<T>> put<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     bool isCustomError = false,
@@ -118,7 +128,7 @@ class Request {
   static Future<Response<T>> patch<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     bool isCustomError = false,
@@ -138,7 +148,7 @@ class Request {
   static Future<Response<T>> delete<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     bool isCustomError = false,
@@ -158,7 +168,7 @@ class Request {
   static Future<Response<T>> path<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     bool isCustomError = false,
@@ -178,7 +188,7 @@ class Request {
   static Future<Response<T>> head<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     bool isCustomError = false,
@@ -198,7 +208,7 @@ class Request {
   static Future<Response<T>> download<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     bool isCustomError = false,
@@ -221,7 +231,7 @@ class Request {
     String url, {
     HttpMethods method = HttpMethods.GET,
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     required void Function(Response) success,
@@ -268,7 +278,7 @@ class Request {
     String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     void Function(DioError)? error,
@@ -292,7 +302,7 @@ class Request {
     String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     void Function(DioError)? error,
@@ -316,7 +326,7 @@ class Request {
     String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     void Function(DioError)? error,
@@ -340,7 +350,7 @@ class Request {
     String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     void Function(DioError)? error,
@@ -364,7 +374,7 @@ class Request {
     String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     void Function(DioError)? error,
@@ -388,7 +398,7 @@ class Request {
     String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     void Function(DioError)? error,
@@ -412,7 +422,7 @@ class Request {
     String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     void Function(DioError)? error,
@@ -436,7 +446,7 @@ class Request {
     String url, {
     required void Function(Response) success,
     Map<String, dynamic>? queryParameters,
-    Map? data,
+    dynamic data,
     Options? options,
     bool needToken = true,
     void Function(DioError)? error,
