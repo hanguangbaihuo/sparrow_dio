@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import '../utils/show_toast.dart';
 
-/// 请求超时处理方法
-void _handleTimeOutError(DioErrorType type, RequestOptions request) {
+/// 处理其他错误
+void _handleOtherError(DioErrorType type, RequestOptions request) {
   var msg;
   switch (type) {
     case DioErrorType.connectTimeout:
@@ -37,7 +37,10 @@ void _handleTimeOutError(DioErrorType type, RequestOptions request) {
 
 /// 通用错误处理方法
 Response? _handlerResponseError(
-    DioError error, RequestOptions request, Response? response) {
+  DioError error,
+  RequestOptions request,
+  Response? response,
+) {
   print('ErrorMessage:${error.message}');
 
   print('================');
@@ -63,25 +66,20 @@ Response? _handlerResponseError(
     return null;
   }
 
-  // 通过request.options中extra中额外配置参数判断错误处理方式
-  if (request.extra["isCustomError"] == true) {
-    return response;
-  }
-
   var errorData = response.data;
 
   if (errorData is String) {
     showToastForException('$errorData');
-    return null;
+  } else if (errorData is Map) {
+    var message = errorData['message'] ??
+        errorData['err_msg'] ??
+        errorData['msg'] ??
+        '出现错误了，请稍后再试';
+    showToastForException('$message');
+  } else {
+    showToastForException('出现错误了，请稍后再试');
   }
 
-  var message = errorData['message'] ??
-      errorData['err_msg'] ??
-      errorData['msg'] ??
-      '出现错误了，请稍后再试';
-  // var code = response.statusCode;
-  showToastForException('$message');
-  // showToastForException('请求异常 $code $message');
   return null;
 }
 
@@ -97,13 +95,17 @@ InterceptorsWrapper errorInterceptor = InterceptorsWrapper(
 
       /// When the server response, but with a incorrect status, such as 404, 503...
       case DioErrorType.response:
-        var res = _handlerResponseError(error, request, response);
 
-        if (res == null) {
+        // 普通错误：showToast 抛出错误，
+        // isCustomError: 不抛出错误，返回response
+
+        if (error.requestOptions.extra['isCustomError'] == true) {
           handler.resolve(response!);
         } else {
+          _handlerResponseError(error, request, response);
           handler.reject(error);
         }
+
         break;
 
       /// It occurs when url is opened timeout.
@@ -124,7 +126,7 @@ InterceptorsWrapper errorInterceptor = InterceptorsWrapper(
 
       default:
         // 非业务错误
-        _handleTimeOutError(error.type, error.requestOptions);
+        _handleOtherError(error.type, error.requestOptions);
         handler.reject(error);
 
       // 业务错误 go on
