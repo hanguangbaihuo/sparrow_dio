@@ -37,6 +37,8 @@ final Dio _dio = Dio(_baseOptions)
 // dart只能在main中执行函数，系统对main函数进行调用
 
 class Request {
+  Dio get dio => _dio;
+
   static setToken(String token) {
     SparrowDioConfig.setToken(token);
   }

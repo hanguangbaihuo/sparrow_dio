@@ -1,3 +1,5 @@
+## [0.10.0] - Request.dio 访问dio实例
+
 ## [0.9.0] - 错误处理
 
 ## [0.8.0] - pretty-log: 不打印body
