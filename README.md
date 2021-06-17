@@ -10,7 +10,7 @@
   - 对外暴露 get, post, put, patch, delete, path, head, download 等别名，方便使用
 
 ```dart
-var res = await Request.get(url: "http://www.baidu.com");
+var res = await Request.get("http://www.baidu.com");
 print(res);
 ```
 
@@ -19,12 +19,32 @@ print(res);
 
 ```dart
   Request.getCallback(
-    url: "http://www.baidu.com",
+    "http://www.baidu.com",
     success: (res) {
       _result = res.data;
       setState(() {});
     },
   );
+```
+
+```dart
+  // setToken
+  Request.setToken('********');
+
+  // 定义钩子函数
+  Request.setHook401(() {
+    print('--------401--------');
+  });
+
+  // 设置输出
+  Request.setOutput((value) {
+    showToast(value);
+  });
+
+  // 设置错误输出
+  Request.setOutputError((value) {
+    showToastForException(value);
+  });
 ```
 
 # 项目信息

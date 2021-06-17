@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import '../utils/show_toast.dart';
+import '../sparrow_dio_config.dart';
 
 /// 处理其他错误
 void _handleOtherError(DioErrorType type, RequestOptions request) {
@@ -24,7 +24,7 @@ void _handleOtherError(DioErrorType type, RequestOptions request) {
     default:
       msg = "";
   }
-  showToast(msg);
+  SparrowDioConfig.output(msg);
   print('$type');
   if (request != null) {
     print('================');
@@ -57,27 +57,29 @@ Response? _handlerResponseError(
   print('$response');
 
   if (response.statusCode == 600) {
-    showToast('网络异常');
+    SparrowDioConfig.output('网络异常');
     return null;
   }
 
   if (response.statusCode == 401) {
-    // TODO 跳转到登录页面
+    if (SparrowDioConfig.hook401 != null) {
+      SparrowDioConfig.hook401!();
+    }
     return null;
   }
 
   var errorData = response.data;
 
   if (errorData is String) {
-    showToastForException('$errorData');
+    SparrowDioConfig.outputError('$errorData');
   } else if (errorData is Map) {
     var message = errorData['message'] ??
         errorData['err_msg'] ??
         errorData['msg'] ??
         '出现错误了，请稍后再试';
-    showToastForException('$message');
+    SparrowDioConfig.outputError('$message');
   } else {
-    showToastForException('出现错误了，请稍后再试');
+    SparrowDioConfig.outputError('出现错误了，请稍后再试');
   }
 
   return null;

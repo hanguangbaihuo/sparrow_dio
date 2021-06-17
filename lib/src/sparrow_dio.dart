@@ -39,8 +39,24 @@ final Dio _dio = Dio(_baseOptions)
 class Request {
   Dio get dio => _dio;
 
+  /// 设置token
   static setToken(String token) {
     SparrowDioConfig.setToken(token);
+  }
+
+  /// 设置401钩子函数
+  static setHook401(void Function() hook401) {
+    SparrowDioConfig.setHook401(hook401);
+  }
+
+  /// 设置输出方式，默认是print
+  static setOutput(void Function(dynamic) output) {
+    SparrowDioConfig.setOutput(output);
+  }
+
+  /// 设置输出方式，默认是print
+  static setOutputError(void Function(dynamic) output) {
+    SparrowDioConfig.setOutputError(output);
   }
 
   /// 封装dio的请求
