@@ -88,7 +88,7 @@ Response? _handlerResponseError(
 // 打印日志
 InterceptorsWrapper errorInterceptor = InterceptorsWrapper(
   // 错误预处理
-  onError: (DioError error, handler) async {
+  onError: (DioError error, handler) {
     final request = error.requestOptions;
     final response = error.response;
 
@@ -102,10 +102,10 @@ InterceptorsWrapper errorInterceptor = InterceptorsWrapper(
         // isCustomError: 不抛出错误，返回response
 
         if (error.requestOptions.extra['isCustomError'] == true) {
-          handler.resolve(response!);
+          return handler.resolve(response!);
         } else {
           _handlerResponseError(error, request, response);
-          handler.reject(error);
+          return handler.reject(error);
         }
 
         break;
@@ -129,7 +129,7 @@ InterceptorsWrapper errorInterceptor = InterceptorsWrapper(
       default:
         // 非业务错误
         _handleOtherError(error.type, error.requestOptions);
-        handler.reject(error);
+        return handler.reject(error);
 
       // 业务错误 go on
     }

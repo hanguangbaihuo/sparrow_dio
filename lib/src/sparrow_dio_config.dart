@@ -3,7 +3,7 @@ class SparrowDioConfig {
   static String? _token;
   static String get token => _token ?? '';
 
-  static setToken(String token) {
+  static void setToken(String token) {
     _token = token;
   }
 
@@ -11,7 +11,7 @@ class SparrowDioConfig {
   static void Function()? _hook401;
   static void Function()? get hook401 => _hook401;
 
-  static setHook401(void Function() hook401) {
+  static void setHook401(void Function() hook401) {
     _hook401 = hook401;
   }
 
@@ -19,7 +19,7 @@ class SparrowDioConfig {
   static void Function(dynamic)? _output;
   static void Function(dynamic) get output => _output ?? print;
 
-  static setOutput(void Function(dynamic) output) {
+  static void setOutput(void Function(dynamic) output) {
     _output = output;
   }
 
@@ -27,7 +27,7 @@ class SparrowDioConfig {
   static void Function(dynamic)? _outputError;
   static void Function(dynamic) get outputError => _outputError ?? output;
 
-  static setOutputError(void Function(dynamic) outputError) {
+  static void setOutputError(void Function(dynamic) outputError) {
     _outputError = outputError;
   }
 }

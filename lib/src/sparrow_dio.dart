@@ -18,10 +18,7 @@ final BaseOptions _baseOptions = BaseOptions(
 final Dio _dio = Dio(_baseOptions)
   // 检查网络
   ..interceptors.add(connectivityInterceptor)
-  // 处理token
-  ..interceptors.add(tokenInterceptor)
-  // 错误处理
-  ..interceptors.add(errorInterceptor)
+
   // 打印日志
   ..interceptors.add(PrettyDioLogger(
     requestHeader: true,
@@ -31,7 +28,12 @@ final Dio _dio = Dio(_baseOptions)
     error: true,
     compact: true,
     maxWidth: 100,
-  ));
+  ))
+  // 错误处理
+  ..interceptors.add(errorInterceptor)
+
+  // 处理token
+  ..interceptors.add(tokenInterceptor);
 
 // dart文件中只能定义变量，类，函数，不能执行函数，所以使用..进行级联调用
 // dart只能在main中执行函数，系统对main函数进行调用
@@ -40,22 +42,22 @@ class Request {
   static Dio get dio => _dio;
 
   /// 设置token
-  static setToken(String token) {
+  static void setToken(String token) {
     SparrowDioConfig.setToken(token);
   }
 
   /// 设置401钩子函数
-  static setHook401(void Function() hook401) {
+  static void setHook401(void Function() hook401) {
     SparrowDioConfig.setHook401(hook401);
   }
 
   /// 设置输出方式，默认是print
-  static setOutput(void Function(dynamic) output) {
+  static void setOutput(void Function(dynamic) output) {
     SparrowDioConfig.setOutput(output);
   }
 
   /// 设置输出方式，默认是print
-  static setOutputError(void Function(dynamic) output) {
+  static void setOutputError(void Function(dynamic) output) {
     SparrowDioConfig.setOutputError(output);
   }
 
@@ -70,7 +72,7 @@ class Request {
     bool isCustomError = false,
   }) {
     options = options ?? Options();
-    return _dio.request(
+    return _dio.request<T>(
       url,
       data: data,
       queryParameters: queryParameters,
