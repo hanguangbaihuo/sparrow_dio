@@ -195,14 +195,14 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.13.0"
+    version: "0.13.1"
   sparrow_utils:
     dependency: transitive
     description:
       name: sparrow_utils
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.0"
+    version: "0.8.0"
   stack_trace:
     dependency: transitive
     description:
