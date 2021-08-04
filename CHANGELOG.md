@@ -1,3 +1,7 @@
+## [0.13.1+1]
+
+- Migrated from the deprecated connectivity plugin to connectivity_plus.
+
 ## [0.13.1] - 更新依赖
 ## [0.13.0] - 网络无连接时，toast展示
 

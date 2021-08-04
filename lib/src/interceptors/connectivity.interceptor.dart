@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import '../sparrow_dio_config.dart';
 
 InterceptorsWrapper connectivityInterceptor = InterceptorsWrapper(
